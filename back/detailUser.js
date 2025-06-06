@@ -4,8 +4,6 @@ async function cargarUsuario(userId) {
         const response = await fetch(`https://reqres.in/api/users/${userId}`);
         const data = await response.json();
         const user = data.data;
-        console.log(data);
-        
 
         // 2. Mostrar en HTML
         document.getElementById('user-name').textContent = `${user.first_name} ${user.last_name}`;
