@@ -1,29 +1,22 @@
-async function getUserById() {
-  const userId = document.getElementById("userIdInput").value;
+async function cargarUsuario(userId) {
+    try {
+        // 1. Obtener datos del usuario específico
+        const response = await fetch(`https://reqres.in/api/users/${userId}`);
+        const data = await response.json();
+        const user = data.data;
 
-  if (!userId) {
-    alert("Por favor, ingresa un ID válido.");
-    return;
-  }
-
-  try {
-    const response = await fetch(`https://reqres.in/api/users/${userId}`);
-    
-    if (!response.ok) {
-      throw new Error("Usuario no encontrado.");
+        // 2. Mostrar en HTML
+        document.getElementById('user-name').textContent = `${user.first_name} ${user.last_name}`;
+        document.getElementById('user-email').textContent = user.email;
+        document.getElementById('user-avatar').src = user.avatar;
+    } catch (error) {
+        console.error("Error al cargar usuario:", error);
     }
-
-    const data = await response.json();
-    mostrarUsuario(data.data); // Enviamos al render
-  } catch (error) {
-    document.getElementById("userInfo").innerHTML = `<p style="color:red;">${error.message}</p>`;
-  }
-}
-function mostrarUsuario(usuario) {
-  document.getElementById("userInfo").innerHTML = `
-    <h3>${usuario.first_name} ${usuario.last_name}</h3>
-    <p>Email: ${usuario.email}</p>
-    <img src="${usuario.avatar}" alt="Avatar">
-  `;
 }
 
+// 3. Al cargar la página, leer el ID de la URL
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('id') || 1; // Si no hay ID, muestra usuario 1
+    cargarUsuario(userId);
+});
