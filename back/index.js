@@ -25,7 +25,7 @@ const fetchUserLis1 = async () => {
             <h5>${user.first_name} ${user.last_name}</h5>
             <p class="mb-0">${user.email}</p>
           </div>
-                    <a href="detalleUsuario.html?id=${user.id}" class="btn btn-primary">Ver detalles</a>
+                    <a href="detailUser.html?id=${user.id}" class="btn btn-primary">Ver detalles</a>
         </div>
       `;
       container.appendChild(userDiv);
